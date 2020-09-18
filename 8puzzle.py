@@ -35,14 +35,33 @@ def get_neighbors(current_node, goal_state):
     for i in range(len(current_node.state)):
         for j in range(len(current_node.state[i])):
             if current_node.state[i][j] == 0:
+                if i == 0 and j == 0:
+                    pass
+                if i == 0 and j == 1:
+                    pass
+                if i == 0 and j == 2:
+                    pass
+                if i == 1 and j == 0:
+                    pass
+                if i == 1 and j == 1:
+                    pass
+                if i == 1 and j == 2:
+                    pass
+                if i == 2 and j == 0:
+                    pass
+                if i == 2 and j == 1:
+                    pass
+                if i == 2 and j == 2:
+                    pass
+
                 if i + 1 < 3:
-                    neighbour_states.append(swap(current_node.state, [i, j], [i + 1, j]))
+                    neighbour_states.append(swap(list(current_node.state), [i, j], [i + 1, j]))
                 if i - 1 > -1:
-                    neighbour_states.append(swap(current_node.state, [i, j], [i - 1, j]))
+                    neighbour_states.append(swap(list(current_node.state), [i, j], [i - 1, j]))
                 if j + 1 < 3:
-                    neighbour_states.append(swap(current_node.state, [i, j], [i, j + 1]))
+                    neighbour_states.append(swap(list(current_node.state), [i, j], [i, j + 1]))
                 if j - 1 > -1:
-                    neighbour_states.append(swap(current_node.state, [i, j], [i, j - 1]))
+                    neighbour_states.append(swap(list(current_node.state), [i, j], [i, j - 1]))
 
     for neighbour_state in neighbour_states:
         neighbour_nodes.append(Node(
@@ -51,6 +70,14 @@ def get_neighbors(current_node, goal_state):
             from_node=current_node,
             heur=get_heur(neighbour_state, goal_state)
         ))
+    print("-----")
+    for i in range(len(neighbour_states)):
+
+        print("Len:", neighbour_nodes[i].length)
+
+        for row in neighbour_nodes[i].state:
+            print(row)
+
     return neighbour_nodes
 
 def swap(s, a, b):
@@ -58,13 +85,13 @@ def swap(s, a, b):
     temp = state[a[0]][a[1]]
     state[a[0]][a[1]] = state[b[0]][b[1]]
     state[b[0]][b[1]] = temp
-    return state
+    return list(state)
 
 def find_path(start_state, goal_state):
 
     closed_set, open_set = [], []
-
-    num = 20
+    
+    num = 10
 
     start_node = Node(
         state=start_state,
@@ -78,15 +105,16 @@ def find_path(start_state, goal_state):
     while(len(open_set) > 0):
 
         current_node = sorted(open_set, key=lambda node: node.full)[0]
-
+        
+        """
         for row in current_node.state:
             print(row)
 
         print(current_node.length)
-        print("------------")
+        print("------------")"""
         num -= 1
         if num == 0:
-            return
+            return 
 
         if current_node.state == goal_state:
             return get_result(current_node)
@@ -133,11 +161,11 @@ def find_path(start_state, goal_state):
 points_list = find_path(
 
 [[1, 2, 3],
- [4, 5, 6],
- [7, 8, 0]],
+ [0, 4, 5],
+ [7, 5, 8]],
 
  [[1, 2, 3],
   [4, 5, 6], 
-  [7, 0, 8]]
+  [7, 8, 0]]
   
 )
